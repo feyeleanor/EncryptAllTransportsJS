@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8'/>
+		<script>
+			fetch('/hello')
+			.then(r => {
+				console.log(`response status code ${r.status}`)
+				return r.text()
+			})
+			.then(t => console.log(t))
+			.catch(e => console.error('fetch failed', e))
+		</script>
+	</head>
+	<body>
+		<h1>Page Loaded</h1>
+	</body>
+</html>
