@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8'/>
+		<script>
+			const ws = new WebSocket('ws://127.0.0.1:3001/')
+			ws.onopen = () => {
+				console.log('Connected to server')
+				ws.send('hello world')
+			}
+			ws.onmessage = m => console.log(`Message from server: ${m.data}`)
+		</script>
+	</head>
+	<body>
+		<h1>Page Loaded</h1>
+	</body>
+</html>
