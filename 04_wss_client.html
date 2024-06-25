@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8'/>
+		<script>
+			const host = '127.0.0.1'
+			const wsPort = 3001
+
+			const ws = new WebSocket(`wss://${host}:${wsPort}/`)
+			ws.onopen = () => {
+				console.log('Connected to server')
+				ws.send('hello world')
+			}
+			ws.onmessage = m => console.log(`Message from server: ${m.data}`)
+		</script>
+	</head>
+	<body>
+		<h1>Page Loaded</h1>
+	</body>
+</html>
