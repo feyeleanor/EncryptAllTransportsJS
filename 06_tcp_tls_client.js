@@ -11,7 +11,7 @@ const tls = require('tls')
 .connect(tcpPort, host, usingCerts("client"), () => {
 	console.log('connected to server')
 	console.log(tls.authorized ? 'authorized' : tls.authorizationError)
-	tls.write('hello world')
+	tls.write('hello server')
 })
 .on('data', d => {
 	console.log(`Message from server: '${d}'`)

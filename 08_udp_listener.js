@@ -3,6 +3,7 @@ const udpPort = 3003
 
 const oneSecond = 1000
 const randomChoice = (yes, no) => Math.round(Math.random()) == 1 ? yes() : no()
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 const wait = ms => new Promise(f => setTimeout(f, ms))
 const pong = Buffer.from('pong')
 
@@ -24,4 +25,4 @@ const socket = require('dgram').createSocket('udp4')
 	process.exit(1)
 })
 
-socket.bind(udpPort, host, () => console.log(`Listening at udp://${host}:${udpPort}/`))
+socket.bind(udpPort, host, () => announceLaunch(udpPort, host, 'udp'))

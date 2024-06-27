@@ -3,6 +3,7 @@ const tcpPort = 3002
 
 const oneSecond = 1000
 const clientAddress = s => `${s.remoteAddress}:${s.remotePort}`
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 const randomChoice = (yes, no) => Math.round(Math.random()) == 1 ? yes() : no()
 const wait = ms => new Promise(f => setTimeout(f, ms))
 
@@ -23,4 +24,4 @@ const net = require('net')
 	console.error(e)
 	net.destroy()
 })
-.listen(httpPort, host, () => console.log(`Server running at tcp://${host}:${httpPort}/`))
+.listen(tcpPort, host, () => announceLaunch(tcpPort, host, 'tcp'))

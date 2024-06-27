@@ -2,11 +2,14 @@ const host = '127.0.0.1'
 const httpPort = 3000
 
 const clientAddress = s => `${s.remoteAddress}:${s.remotePort}`
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 
 const fs = require('fs')
-const usingCerts = n => { return {
-	key: fs.readFileSync(`${n}_key.pem`), 
-	cert: fs.readFileSync(`${n}_cert.pem`), 
+const usingCerts = n => {
+	return {
+		key: fs.readFileSync(`${n}_key.pem`),
+		cert: fs.readFileSync(`${n}_cert.pem`),
+//		ca: [readFileSync(`${__dirname}/path/to/cert/ca.crt`)]
 }}
 
 require('https')
@@ -20,4 +23,4 @@ require('https')
 		res.writeHead(200, { 'Content-Type': 'text/plain' })
 		res.end('Hello World')
 }))
-.listen(httpPort, host, () => console.log(`Listening at https://${host}:${httpPort}/`))
+.listen(httpPort, host, () => announceLaunch(httpPort, host, 'https'))

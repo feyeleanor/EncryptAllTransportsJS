@@ -2,6 +2,7 @@ const host = '127.0.0.1'
 const httpPort = 3000
 
 const clientAddress = s => `${s.remoteAddress}:${s.remotePort}`
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 
 require('http')
 .createServer(require('express')()
@@ -14,4 +15,4 @@ require('http')
 		res.writeHead(200, { 'Content-Type': 'text/plain' })
 		res.end('Hello World')
 }))
-.listen(httpPort, host, () => console.log(`Listening at http://${host}:${httpPort}/`))
+.listen(httpPort, host, () => announceLaunch(httpPort, host))

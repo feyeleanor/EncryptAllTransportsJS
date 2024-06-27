@@ -3,10 +3,11 @@ const httpPort = 3000
 const wsPort = 3001
 
 const clientAddress = s => `${s.remoteAddress}:${s.remotePort}`
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 
 require('express')()
 .use((req, res) => res.sendFile('/03_ws_client.html', { root: __dirname }))
-.listen(httpPort, host, () => console.log(`Server running at http://${host}:${httpPort}/`))
+.listen(httpPort, host, () => announceLaunch(httpPort, host))
 
 const { WebSocketServer } = require('ws')
 new WebSocketServer({ port: wsPort })
@@ -19,3 +20,4 @@ new WebSocketServer({ port: wsPort })
 	.on('error', () => console.log('websocket error'))
 	.send('hello')
 })
+.listen(wsPort, host, () => announceLaunch(wsPort, host, 'ws'))

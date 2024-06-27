@@ -1,15 +1,18 @@
 const host = '127.0.0.1'
-const tcpPort = 3000
+const tcpPort = 3002
 
 const oneSecond = 1000
 const clientAddress = s => `${s.remoteAddress}:${s.remotePort}`
+const announceLaunch = (p, h, s = 'http') => console.log(`Listening at ${s}://${h}:${p}/`)
 const randomChoice = (yes, no) => Math.round(Math.random()) == 1 ? yes() : no()
 const wait = ms => new Promise(r => setTimeout(r, ms))
 
 const fs = require('fs')
-const usingCerts = n => { return {
-	key: fs.readFileSync(`${n}_key.pem`), 
-	cert: fs.readFileSync(`${n}_cert.pem`), 
+const usingCerts = n => {
+	return {
+		key: fs.readFileSync(`${n}_key.pem`),
+		cert: fs.readFileSync(`${n}_cert.pem`),
+//		ca: [readFileSync(`${__dirname}/path/to/cert/ca.crt`)]
 }}
 
 const tls = require('tls')
@@ -29,4 +32,4 @@ const tls = require('tls')
 	console.error(e)
 	tls.destroy()
 })
-.listen(tcpPort, host, () => console.log(`Server running at tcp://${host}:${tcpPort}/`))
+.listen(tcpPort, host, () => announceLaunch(tcpPort, host, 'tcps'))

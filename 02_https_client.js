@@ -1,9 +1,11 @@
 const host = '127.0.0.1'
 const httpPort = 3000
 
+const hello = `https://${host}:${httpPort}/hello`
+
 const onConnection = method => {
 	return response => {
-		if (response.statusCode = 200) {
+		if (response.statusCode == 200) {
 			var message = ''
 			response
 			.on('data', d => message += d)
@@ -13,8 +15,6 @@ const onConnection = method => {
 		}
 	}
 }
-
-const hello = `https://${host}:${httpPort}/hello`
 
 const https = require('https')
 https

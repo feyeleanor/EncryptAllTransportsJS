@@ -1,7 +1,9 @@
 const host = '127.0.0.1'
 const httpPort = 3000
 
-fetch(`https://${host}:${httpPort}/hello`)
+const hello = `https://${host}:${httpPort}/hello`
+
+fetch(hello)
 .then(r => {
 	console.log(`response status code ${r.status}`)
 	return r.text()

@@ -9,12 +9,11 @@ const usingCerts = n => { return {
 	key: fs.readFileSync(`${n}_key.pem`), 
 	cert: fs.readFileSync(`${n}_cert.pem`), 
 }}
-const options = usingCerts("client")
 
-let session = Buffer.from('')
-const sessionId = s => s.slice(0, 48).toString('hex')	//.substr(0, 48)
+const sessionId = s => s.slice(0, 2).toString('hex') + '...' + s.slice(46, 48).toString('hex')
 
 const tls = require('tls')
+var session
 const connect = (p, h, o = {}) => {
 	let socket = tls.connect(p, h, { ...o, session: session })
 	.on('secureConnect', () => {
@@ -28,17 +27,10 @@ const connect = (p, h, o = {}) => {
 		socket.write('hello server')
 	})
 	.once('session', s => session = s)
-	.on('data', d => {
-		console.log(`server says: ${d}`)
-		socket.write('next')
-	})
+	.on('data', d => console.log(`server says: ${d}`))
 	.on('close', () => {
 		console.log('connection interrupted')
-		wait(oneSecond)
-		.then(() => {
-			console.log(`reconnecting session ${sessionId(session)}`)
-			connect(p, h, o)
-		})
+		wait(oneSecond).then(() => connect(p, h, o))
 	})
 }
-connect(tcpPort, host, options)
+connect(tcpPort, host, usingCerts("client"))
